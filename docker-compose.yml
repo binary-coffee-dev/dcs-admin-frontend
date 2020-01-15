@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  deploy:
+    container_name: 'admin-frontend'
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    restart: always
+    ports:
+      - '127.0.0.1:${PORT_FRONTEND}:80'
