@@ -6,14 +6,10 @@ import {Routes, RouterModule} from '@angular/router';
 const routes: Routes = [
     {
         path: '',
-        redirectTo: 'admin/dashboard',
+        redirectTo: 'dashboard',
         pathMatch: 'full',
     }, {
-        path: 'admin',
-        redirectTo: 'admin/dashboard',
-        pathMatch: 'full',
-    }, {
-        path: 'admin',
+        path: '',
         children: [{
             path: '',
             loadChildren: './features/layouts/admin-layout/admin-layout.module#AdminLayoutModule'
