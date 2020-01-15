@@ -1,16 +1,16 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {NavbarComponent} from './navbar.component';
-import {RouterTestingModule} from "@angular/router/testing";
-import {Location} from "@angular/common";
-import {Subject} from "rxjs";
-import {NO_ERRORS_SCHEMA} from "@angular/core";
+import {RouterTestingModule} from '@angular/router/testing';
+import {Location} from '@angular/common';
+import {Subject} from 'rxjs';
+import {NO_ERRORS_SCHEMA} from '@angular/core';
 
 describe('NavbarComponent', () => {
     let component: NavbarComponent;
     let fixture: ComponentFixture<NavbarComponent>;
 
-    let location = new Subject();
+    const location = new Subject();
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({

@@ -1,8 +1,8 @@
 import {RouterModule, Routes} from '@angular/router';
-import {NgModule} from "@angular/core";
+import {NgModule} from '@angular/core';
 
-import {ListComponent} from "./list/list.component";
-import {OverviewComponent} from "./overview/overview.component";
+import {ListComponent} from './list/list.component';
+import {OverviewComponent} from './overview/overview.component';
 
 const routes: Routes = [
     {

@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 
 import {OverviewComponent} from './overview/overview.component';
 import {ListComponent} from './list/list.component';
-import {ArticleRoutingModule} from "./article-routing.module";
+import {ArticleRoutingModule} from './article-routing.module';
 
 @NgModule({
     declarations: [OverviewComponent, ListComponent],
