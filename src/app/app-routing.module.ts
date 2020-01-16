@@ -8,12 +8,17 @@ const routes: Routes = [
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full',
-    }, {
+    },
+    {
         path: '',
         children: [{
             path: '',
             loadChildren: './features/layouts/admin-layout/admin-layout.module#AdminLayoutModule'
         }]
+    },
+    {
+        path: 'login',
+        loadChildren: './features/auth/auth.module#AuthModule'
     }
 ];
 
