@@ -1,4 +1,9 @@
 import {Component, OnInit} from '@angular/core';
+import {Router} from "@angular/router";
+
+import {Store} from "@ngxs/store";
+
+import {LogoutAction} from "../../../core/redux/actions";
 
 declare const $: any;
 
@@ -22,7 +27,7 @@ export const ROUTES: RouteInfo[] = [
 export class SidebarComponent implements OnInit {
     menuItems: any[];
 
-    constructor() {
+    constructor(private store: Store, private router: Router) {
     }
 
     ngOnInit() {
@@ -32,4 +37,10 @@ export class SidebarComponent implements OnInit {
     isMobileMenu() {
         return $(window).width() <= 991;
     };
+
+    logout() {
+        this.store.dispatch(new LogoutAction()).subscribe(() => {
+            this.router.navigate(['login']);
+        });
+    }
 }

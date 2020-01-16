@@ -4,3 +4,7 @@ export class LoginAction {
   constructor(public identifier: string, public password: string) {
   }
 }
+
+export class LogoutAction {
+  static readonly type = '[Auth] Logout action';
+}

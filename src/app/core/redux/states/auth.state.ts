@@ -3,7 +3,7 @@ import {Action, Selector, State, StateContext} from '@ngxs/store';
 
 import {AuthStateModel, initAuthStateModel} from "./auth-state.model";
 import {AuthService} from "../services/auth.service";
-import {LoginAction} from "../actions";
+import {LoginAction, LogoutAction} from "../actions";
 
 @State<AuthStateModel>({
     name: 'auth',
@@ -24,5 +24,10 @@ export class AuthState {
         return this.authService.login(action.identifier, action.password).pipe(
             tap((authData) => ctx.patchState({token: authData.jwt}))
         );
+    }
+
+    @Action(LogoutAction)
+    logoutAction(ctx: StateContext<AuthStateModel>) {
+        ctx.patchState({token: ''});
     }
 }
