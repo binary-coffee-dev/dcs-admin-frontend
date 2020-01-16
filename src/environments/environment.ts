@@ -1,10 +1,9 @@
-// The file contents for the current environment will overwrite these during build.
-// The build system defaults to the dev environment which uses `environment.ts`, but if you do
-// `ng build --env=prod` then `environment.prod.ts` will be used instead.
-// The list of which env maps to which file can be found in `.angular-cli.json`.
+import sharedEnvironment from './base';
 
 export const environment = {
-  apiUrl: 'http://localhost:1337/',
-  graphqlUrl: 'http://localhost:1337/graphql',
-  production: false
+  ...sharedEnvironment,
+  apiUrl: sharedEnvironment['apiUrl'] || 'http://localhost:1337/',
+  graphqlUrl: sharedEnvironment['graphqlUrl'] || 'http://localhost:1337/graphql',
+  siteUrl: sharedEnvironment['siteUrl'] || 'https://binary-coffee.dev/admin',
+  production: sharedEnvironment['production'] || false
 };

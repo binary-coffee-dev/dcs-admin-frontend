@@ -1,5 +1,9 @@
+import sharedEnvironment from './base';
+
 export const environment = {
-  apiUrl: 'http://localhost:1337/',
-  graphqlUrl: 'http://localhost:1337/graphql',
-  production: true
+  ...sharedEnvironment,
+  apiUrl: sharedEnvironment['apiUrl'] || 'http://localhost:1337/',
+  graphqlUrl: sharedEnvironment['graphqlUrl'] || 'http://localhost:1337/graphql',
+  siteUrl: sharedEnvironment['siteUrl'] || 'https://binary-coffee.dev/admin',
+  production: sharedEnvironment['production'] || false
 };

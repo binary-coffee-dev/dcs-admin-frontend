@@ -4,12 +4,13 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build --prod --base-href /admin/",
-    "test": "jest --coverage --no-cache",
+    "start": "npm run get_env && ng serve",
+    "build": "npm run get_env && ng build --prod --base-href /admin/",
+    "test": "npm run get_env && jest --coverage --no-cache",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "i:c": "rm -rf node_modules/ && npm install"
+    "i:c": "rm -rf node_modules/ && npm install",
+    "get_env": "node ./node_modules/ng-node-environment/index.js"
   },
   "private": true,
   "dependencies": {
@@ -47,6 +48,7 @@
     "hammerjs": "2.0.8",
     "jquery": "3.4.1",
     "moment": "2.24.0",
+    "ng-node-environment": "^1.1.1",
     "perfect-scrollbar": "1.1.0",
     "popper.js": "1.15.0",
     "rxjs": "6.5.2",
