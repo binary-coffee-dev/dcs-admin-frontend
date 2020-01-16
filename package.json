@@ -28,6 +28,7 @@
     "@angular/platform-server": "8.0.0",
     "@angular/router": "8.0.0",
     "@ngrx/store-devtools": "^3.2.4",
+    "@ngxs/storage-plugin": "^3.6.1",
     "@ngxs/store": "^3.6.1",
     "ajv": "6.10.0",
     "apollo-angular": "^1.8.0",
