@@ -6,6 +6,7 @@ import {HttpClientModule} from '@angular/common/http';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
+import {ReduxModule} from "./core/redux/redux.module";
 
 @NgModule({
     imports: [
@@ -14,7 +15,8 @@ import {AppComponent} from './app.component';
         ReactiveFormsModule,
         HttpClientModule,
         RouterModule,
-        AppRoutingModule
+        AppRoutingModule,
+        ReduxModule
     ],
     declarations: [AppComponent],
     bootstrap: [AppComponent]
