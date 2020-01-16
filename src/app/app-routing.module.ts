@@ -3,6 +3,8 @@ import {CommonModule} from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
 import {Routes, RouterModule} from '@angular/router';
 
+import {AuthGuard} from "./core/guards/auth.guard";
+
 const routes: Routes = [
     {
         path: '',
@@ -11,10 +13,8 @@ const routes: Routes = [
     },
     {
         path: '',
-        children: [{
-            path: '',
-            loadChildren: './features/layouts/admin-layout/admin-layout.module#AdminLayoutModule'
-        }]
+        canActivate: [AuthGuard],
+        loadChildren: './features/layouts/admin-layout/admin-layout.module#AdminLayoutModule'
     },
     {
         path: 'login',
