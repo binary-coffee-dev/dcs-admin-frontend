@@ -1,5 +1,5 @@
 import {tap} from "rxjs/operators";
-import {Action, State, StateContext} from '@ngxs/store';
+import {Action, Selector, State, StateContext} from '@ngxs/store';
 
 import {AuthStateModel, initAuthStateModel} from "./auth-state.model";
 import {AuthService} from "../services/auth.service";
@@ -10,6 +10,11 @@ import {LoginAction} from "../actions";
     defaults: initAuthStateModel()
 })
 export class AuthState {
+
+    @Selector()
+    static token(state: AuthStateModel): string {
+        return state.token;
+    }
 
     constructor(private authService: AuthService) {
     }
