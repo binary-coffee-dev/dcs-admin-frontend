@@ -10,5 +10,6 @@ export interface Post {
   description: string;
   banner: File;
   author: User;
+  enable: boolean;
   views: string;
 }

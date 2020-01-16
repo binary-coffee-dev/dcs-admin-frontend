@@ -19,11 +19,11 @@
                                 <th>Actions</th>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>First article</td>
-                                    <td>Switch</td>
-                                    <td>first-article</td>
-                                    <td>134</td>
+                                <tr *ngFor="let post of posts">
+                                    <td>{{post.title}}</td>
+                                    <td>{{post.enable}}</td>
+                                    <td>{{post.name}}</td>
+                                    <td>{{post.views}}</td>
                                     <td>image</td>
                                     <td class="text-primary">buttons</td>
                                 </tr>
