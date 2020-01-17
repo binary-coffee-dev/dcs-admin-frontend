@@ -51,6 +51,7 @@
     "jquery": "3.4.1",
     "moment": "2.24.0",
     "ng-node-environment": "^1.1.1",
+    "ngx-markdown": "^8.2.1",
     "perfect-scrollbar": "1.1.0",
     "popper.js": "1.15.0",
     "rxjs": "6.5.2",

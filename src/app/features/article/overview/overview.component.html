@@ -1,3 +1,63 @@
-<p>
-  overview works!
-</p>
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title">Edit article</h4>
+                    </div>
+                    <div class="card-body">
+                        <form [formGroup]="articleForm">
+                            <div class="row">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        Enable
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value="">
+                                        <span class="form-check-sign">
+                                        <span class="check"></span>
+                                    </span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput
+                                               placeholder="Title">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <mat-form-field class="example-full-width">
+                                        <textarea matInput
+                                                  placeholder="Article description"></textarea>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                  <textarea class="body-editor"
+                                            (change)="onBodyChange()"
+                                            formControlName="body"></textarea>
+                                </div>
+                                <div class="col-md-6">
+                                    <markdown [data]="post?.body"
+                                              katex
+                                              lineNumbers></markdown>
+                                </div>
+                            </div>
+                            <button mat-raised-button
+                                    type="submit"
+                                    class="btn btn-danger pull-right">Save
+                            </button>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

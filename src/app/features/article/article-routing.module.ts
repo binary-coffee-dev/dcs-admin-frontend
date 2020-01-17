@@ -10,7 +10,11 @@ const routes: Routes = [
         component: ListComponent
     },
     {
-        path: '',
+        path: 'create',
+        component: OverviewComponent
+    },
+    {
+        path: 'update/:id',
         component: OverviewComponent
     }
 ];
