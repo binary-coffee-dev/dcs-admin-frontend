@@ -1,11 +1,14 @@
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
+
 import {AdminLayoutComponent} from './admin-layout.component';
+import {MeResolver} from "./me.resolver";
 
 const routes: Routes = [
     {
         path: '',
         component: AdminLayoutComponent,
+        resolve: {me: MeResolver},
         children: [
             {
                 path: 'dashboard',
@@ -27,6 +30,7 @@ const routes: Routes = [
     imports: [
         RouterModule.forChild(routes)
     ],
+    providers: [MeResolver],
     exports: [RouterModule]
 })
 export class AdminLayoutRoutingModule {
