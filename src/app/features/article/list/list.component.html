@@ -16,7 +16,7 @@
                                 <th>Name</th>
                                 <th>Views</th>
                                 <th>Banner</th>
-                                <th>Actions</th>
+                                <th class="td-actions text-right">Actions</th>
                                 </thead>
                                 <tbody>
                                 <tr *ngFor="let post of posts">
@@ -25,7 +25,23 @@
                                     <td>{{post.name}}</td>
                                     <td>{{post.views}}</td>
                                     <td>image</td>
-                                    <td class="text-primary">buttons</td>
+                                    <td class="td-actions text-right">
+                                        <button mat-raised-button
+                                                type="button"
+                                                matTooltip="Edit"
+                                                [matTooltipPosition]="'above'"
+                                                class="btn btn-primary btn-link btn-sm btn-just-icon">
+                                            <i class="material-icons">edit</i>
+                                        </button>
+                                        <button mat-raised-button
+                                                *ngIf="false"
+                                                type="button"
+                                                matTooltip="Remove"
+                                                [matTooltipPosition]="'above'"
+                                                class="btn btn-danger btn-link btn-sm btn-just-icon">
+                                            <i class="material-icons">close</i>
+                                        </button>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
