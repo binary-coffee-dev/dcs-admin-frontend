@@ -3,7 +3,8 @@ import {Action, Selector, State, StateContext} from '@ngxs/store';
 
 import {AuthStateModel, initAuthStateModel} from "./auth-state.model";
 import {AuthService} from "../services/auth.service";
-import {LoginAction, LogoutAction, MeAction} from "../actions";
+import {LoginAction, LogoutAction, MeAction, UpdateMeAction} from "../actions";
+import {User} from "../models";
 
 @State<AuthStateModel>({
     name: 'auth',
@@ -14,6 +15,11 @@ export class AuthState {
     @Selector()
     static token(state: AuthStateModel): string {
         return state.token;
+    }
+
+    @Selector()
+    static me(state: AuthStateModel): User {
+        return state.me;
     }
 
     constructor(private authService: AuthService) {
@@ -34,6 +40,13 @@ export class AuthState {
     @Action(MeAction)
     meAction(ctx: StateContext<AuthStateModel>) {
         return this.authService.me().pipe(
+            tap(me => ctx.patchState({me}))
+        );
+    }
+
+    @Action(UpdateMeAction)
+    updateMeAction(ctx: StateContext<AuthStateModel>, action: UpdateMeAction) {
+        return this.authService.updateMeAction(action.id, action.email, action.page).pipe(
             tap(me => ctx.patchState({me}))
         );
     }

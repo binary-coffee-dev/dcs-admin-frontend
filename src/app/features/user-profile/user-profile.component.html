@@ -8,45 +8,56 @@
                         <p class="card-category">Complete your profile</p>
                     </div>
                     <div class="card-body">
-                        <form>
+                        <form [formGroup]="profileForm"
+                              (change)="onUserDataChange()"
+                              (ngSubmit)="saveUserData()">
                             <div class="row">
                                 <div class="col-md-6">
                                     <mat-form-field class="example-full-width">
                                         <input matInput
-                                               disabled
-                                               placeholder="Username">
-                                    </mat-form-field>
-                                </div>
-                                <div class="col-md-6">
-                                    <mat-form-field class="example-full-width">
-                                        <input matInput
+                                               formControlName="email"
                                                placeholder="Email address"
                                                type="email">
                                     </mat-form-field>
                                 </div>
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput
+                                               formControlName="page"
+                                               placeholder="Web site"
+                                               type="text">
+                                    </mat-form-field>
+                                </div>
                             </div>
+                            <button mat-raised-button
+                                    type="submit"
+                                    [disabled]="!profileDataChange"
+                                    class="btn btn-danger pull-right">Update Profile</button>
+                            <div class="clearfix"></div>
+                        </form>
+                        <form [formGroup]="passwordForm">
                             <div class="row">
                                 <div class="col-md-6">
                                     <mat-form-field class="example-full-width">
-                                        <input matInput placeholder="Fist Name" type="text">
+                                        <input matInput
+                                               formControlName="password"
+                                               placeholder="Password"
+                                               type="password">
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-6">
                                     <mat-form-field class="example-full-width">
-                                        <input matInput placeholder="Last Name" type="text">
+                                        <input matInput
+                                               formControlName="password2"
+                                               placeholder="Repeat password"
+                                               type="password">
                                     </mat-form-field>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <label>About Me</label>
-                                    <mat-form-field class="example-full-width">
-                                        <textarea matInput></textarea>
-                                    </mat-form-field>
-                                </div>
-                            </div>
-                            <button mat-raised-button type="submit" class="btn btn-danger pull-right">Update Profile
-                            </button>
+                            <button mat-raised-button
+                                    type="submit"
+                                    [disabled]="!passwordChange"
+                                    class="btn btn-danger pull-right">Update password</button>
                             <div class="clearfix"></div>
                         </form>
                     </div>
@@ -57,15 +68,11 @@
                     <div class="card-avatar">
                         <a href="javascript:void(0)">
                             <img class="img"
-                                 src="./assets/img/faces/marc.jpg"/>
+                                 [src]="getUserImage()"/>
                         </a>
                     </div>
                     <div class="card-body">
-                        <h6 class="card-category text-gray">Role</h6>
-                        <h4 class="card-title">Alan Brito</h4>
-                        <p class="card-description">
-                            Nothing to say???
-                        </p>
+                        <h4 class="card-title">{{me.username}}</h4>
                     </div>
                 </div>
             </div>
