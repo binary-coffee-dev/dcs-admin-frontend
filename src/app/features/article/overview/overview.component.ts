@@ -18,7 +18,10 @@ export class OverviewComponent implements OnInit {
     } as Post;
 
     articleForm = new FormGroup({
-        body: new FormControl('')
+        body: new FormControl(''),
+        enable: new FormControl(''),
+        description: new FormControl(''),
+        title: new FormControl('')
     });
 
     constructor(private store: Store) {
@@ -29,6 +32,9 @@ export class OverviewComponent implements OnInit {
             if (post) {
                 this.post = {...post};
                 this.articleForm.controls.body.setValue(this.post.body);
+                this.articleForm.controls.description.setValue(this.post.description);
+                this.articleForm.controls.title.setValue(this.post.title);
+                this.articleForm.controls.enable.setValue(Boolean(this.post.enable));
             }
         });
     }
