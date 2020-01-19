@@ -3,3 +3,23 @@
 .fill-space {
   flex: 100;
 }
+
+.header {
+  display: flex;
+
+  .card-title {
+    display: inline-block;
+  }
+
+  .item-actions {
+    display: inline-block;
+    position: inherit;
+    width: auto;
+
+    .item-action {
+      button {
+        text-transform: capitalize;
+      }
+    }
+  }
+}
