@@ -1,10 +1,16 @@
 import {Action, Selector, State, StateContext} from '@ngxs/store';
 import {tap} from 'rxjs/operators';
+import {Observable} from "rxjs";
 
-import {FetchPostsAction, NextPageAction, PreviousPageAction} from '../actions';
+import {
+    FetchFilesAction,
+    NextFilesPageAction,
+    PreviousFilesPageAction
+} from '../actions';
 import {File} from '../models';
 import {FileStateModel, initFileStateModel} from "./file-state.model";
-import {MINIMUM_PAGE, PaginationBaseClass} from "./pagination-base.class";
+import {MINIMUM_PAGE, PaginationBaseClass, ResponseData} from "./pagination-base.class";
+import {FileService} from "../services";
 
 @State<FileStateModel>({
     name: 'file',
@@ -27,18 +33,18 @@ export class FileState extends PaginationBaseClass<FileStateModel> {
         return state.lastPage;
     }
 
-    constructor() {
+    constructor(private fileService: FileService) {
         super();
     }
 
-    @Action(FetchPostsAction)
+    @Action(FetchFilesAction)
     fetchPostsAction(ctx: StateContext<FileStateModel>) {
         const pageSize = ctx.getState().pageSize;
         const start = ctx.getState().page * pageSize;
         return this.fetchPage(pageSize, start, ctx);
     }
 
-    @Action(NextPageAction)
+    @Action(NextFilesPageAction)
     nextPageAction(ctx: StateContext<FileStateModel>) {
         const pageSize = ctx.getState().pageSize;
         const currentPage = this.nextPageNumber(ctx.getState().page, ctx.getState().count, pageSize);
@@ -48,7 +54,7 @@ export class FileState extends PaginationBaseClass<FileStateModel> {
         }));
     }
 
-    @Action(PreviousPageAction)
+    @Action(PreviousFilesPageAction)
     previousPageAction(ctx: StateContext<FileStateModel>) {
         const pageSize = ctx.getState().pageSize;
         const currentPage = Math.max(ctx.getState().page - 1, MINIMUM_PAGE);
@@ -56,5 +62,9 @@ export class FileState extends PaginationBaseClass<FileStateModel> {
         return this.fetchPage(pageSize, start, ctx, currentPage).pipe(tap(() => {
             ctx.patchState({page: currentPage});
         }));
+    }
+
+    fetchElements(pageSize, start): Observable<ResponseData> {
+        return this.fileService.fetchFiles(pageSize, start);
     }
 }
