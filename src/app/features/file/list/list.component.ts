@@ -1,25 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {MatDialog} from "@angular/material/dialog";
 
 import {Store} from "@ngxs/store";
 
 import {File} from "../../../core/redux/models";
 import {FetchFilesAction} from "../../../core/redux/actions";
 import {FileState} from "../../../core/redux/states";
+import {UploadFileModalComponent} from "./upload-file.modal";
 
 @Component({
-  selector: 'app-list',
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss']
+    selector: 'app-list',
+    templateUrl: './list.component.html',
+    styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
 
-  files: File[] = [];
+    files: File[] = [];
 
-  constructor(private store: Store) { }
+    constructor(private store: Store, private dialog: MatDialog) {
+    }
 
-  ngOnInit() {
-    this.store.select(FileState.files).subscribe(files => this.files = files);
-    this.store.dispatch(new FetchFilesAction());
-  }
+    ngOnInit() {
+        this.store.select(FileState.files).subscribe(files => this.files = files);
+        this.store.dispatch(new FetchFilesAction());
+    }
 
+    openUploadFileModal() {
+      const dialog = this.dialog.open(UploadFileModalComponent, {});
+      dialog.afterClosed().subscribe(result => {});
+    }
 }
