@@ -23,13 +23,15 @@
               <table class="table">
                 <thead class=" text-primary">
                 <th>Title</th>
-                <th>image</th>
+                <th>Image</th>
                 <th class="td-actions text-right">Actions</th>
                 </thead>
                 <tbody>
                 <tr *ngFor="let file of files">
                   <td>{{file.name}}</td>
-                  <td>image</td>
+                  <td><img class="file-image"
+                           [src]="file.url"
+                           [alt]="file.name"></td>
                   <td class="td-actions text-right">
                     <button mat-raised-button
                             type="button"
