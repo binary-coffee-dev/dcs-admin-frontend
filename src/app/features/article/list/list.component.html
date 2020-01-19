@@ -3,9 +3,20 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header card-header-danger">
+                    <div class="card-header card-header-danger header">
                         <h4 class="card-title">Articles</h4>
-                        <p class="card-category"></p>
+                        <div class="fill-space"></div>
+                        <div class="item-actions">
+                            <div class="item-action">
+                                <button mat-button
+                                        class="nav-link"
+                                        routerLink="/articles/create">
+                                    <i class="material-icons">add</i>
+                                    new article
+                                    <div class="ripple-container"></div>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
