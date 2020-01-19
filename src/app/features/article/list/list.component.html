@@ -21,7 +21,18 @@
                                 <tbody>
                                 <tr *ngFor="let post of posts">
                                     <td>{{post.title}}</td>
-                                    <td>{{post.enable}}</td>
+                                    <td>
+                                        <div class="col-md-6 form-check">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input"
+                                                       type="checkbox"
+                                                       [(ngModel)]="post.enable">
+                                                <span class="form-check-sign">
+                                                    <span class="check"></span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </td>
                                     <td>{{post.name}}</td>
                                     <td>{{post.views}}</td>
                                     <td>image</td>

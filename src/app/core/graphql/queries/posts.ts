@@ -7,6 +7,7 @@ export const POSTS_QUERY = gql`
                 id
                 name
                 title
+                enable
                 body
                 description
                 publishedAt
