@@ -32,6 +32,14 @@
                   <td>image</td>
                   <td class="td-actions text-right">
                     <button mat-raised-button
+                            type="button"
+                            matTooltip="Copy Url"
+                            [matTooltipPosition]="'above'"
+                            ngxClipboard [cbContent]="file.url"
+                            class="btn btn-danger btn-link btn-sm btn-just-icon">
+                      <i class="material-icons">file_copy</i>
+                    </button>
+                    <button mat-raised-button
                             *ngIf="false"
                             type="button"
                             matTooltip="Remove"
