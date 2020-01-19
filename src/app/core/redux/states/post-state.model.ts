@@ -1,18 +1,14 @@
 import {Post} from '../models';
+import {StateBase} from "./pagination-base.class";
 
-export interface PostStateModel {
-  posts: Post[];
+export interface PostStateModel extends StateBase {
+  elements: Post[];
   post: Post;
-  count: number;
-  page: number;
-  pageSize: number;
-  firstPage: boolean;
-  lastPage: boolean;
 }
 
 export const initPostStateModel = () => {
   return {
-    posts: [],
+    elements: [],
     page: 0,
     pageSize: 10,
     firstPage: false,
