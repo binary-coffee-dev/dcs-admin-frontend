@@ -1,14 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
+import {MatDialog} from "@angular/material/dialog";
 
 import {Store} from "@ngxs/store";
 
-import {Post} from "../../../core/redux/models";
+import {File, Post} from "../../../core/redux/models";
 import {AuthState, PostState} from "../../../core/redux/states";
 import {PostCreateAction, PostUpdateAction} from "../../../core/redux/actions";
-import {MatDialog} from "@angular/material/dialog";
 import {SelectImageModalComponent} from "./select-image-modal/select-image-modal.component";
+import {environment} from "../../../../environments/environment";
 
 @Component({
     selector: 'app-overview',
@@ -42,7 +43,12 @@ export class OverviewComponent implements OnInit {
         } else {
             this.store.select(PostState.post).subscribe(post => {
                 if (post) {
-                    this.post = {...post};
+                    const newPost = {...post};
+                    if (newPost.banner) {
+                        newPost.banner = {...newPost.banner};
+                        newPost.banner.url = this.normalizeImageUrl(newPost.banner.url);
+                    }
+                    this.post = newPost;
                     this.articleForm.controls.body.setValue(this.post.body);
                     this.articleForm.controls.description.setValue(this.post.description);
                     this.articleForm.controls.title.setValue(this.post.title);
@@ -50,6 +56,13 @@ export class OverviewComponent implements OnInit {
                 }
             });
         }
+    }
+
+    normalizeImageUrl(url: string) {
+        if (url.startsWith('http')) {
+            return url;
+        }
+        return environment.apiUrl + url;
     }
 
     isNewPost() {
@@ -80,6 +93,12 @@ export class OverviewComponent implements OnInit {
         const dialog = this.dialog.open(SelectImageModalComponent, {
             height: '50vh',
             width: '50vw',
+        });
+
+        dialog.afterClosed().subscribe((image: File) => {
+            if (image) {
+                this.post.banner = image;
+            }
         });
     }
 }

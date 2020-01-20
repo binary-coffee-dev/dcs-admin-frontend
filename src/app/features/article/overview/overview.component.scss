@@ -15,8 +15,18 @@
 
   .banner-image-container {
     min-height: 200px;
+    max-height: 200px;
     position: relative;
     background: #b1b1b1;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
+
+    img {
+      height: 100%;
+      width: auto;
+    }
 
     .no-banner {
       align-items: center;

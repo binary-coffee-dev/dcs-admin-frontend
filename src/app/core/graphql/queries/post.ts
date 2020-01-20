@@ -11,7 +11,7 @@ export const POST_QUERY = gql`
             body
             publishedAt
             views
-            banner { url }
+            banner { id url }
             author {
                 username
                 email

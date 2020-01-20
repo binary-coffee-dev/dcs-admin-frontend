@@ -29,14 +29,17 @@ export class PostService {
     }
 
     updatePost(post: Post) {
+        const banner = post.banner && post.banner.id;
+        const author = post.author && post.author.id;
         return this.apollo
-            .mutate({mutation: POST_UPDATE_MUTATION, variables: post})
+            .mutate({mutation: POST_UPDATE_MUTATION, variables: {...post, banner, author}})
             .pipe(map((result: any) => result.data.updatePost.post));
     }
 
     createPost(post: Post, me: User) {
+        const banner = post.banner && post.banner.id;
         return this.apollo
-            .mutate({mutation: POST_CREATE_MUTATION, variables: {...post, author: me.id}})
+            .mutate({mutation: POST_CREATE_MUTATION, variables: {...post, author: me.id, banner}})
             .pipe(map((result: any) => result.data.createPost.post));
     }
 }
