@@ -7,6 +7,8 @@ import {Store} from "@ngxs/store";
 import {Post} from "../../../core/redux/models";
 import {AuthState, PostState} from "../../../core/redux/states";
 import {PostCreateAction, PostUpdateAction} from "../../../core/redux/actions";
+import {MatDialog} from "@angular/material/dialog";
+import {SelectImageModalComponent} from "./select-image-modal/select-image-modal.component";
 
 @Component({
     selector: 'app-overview',
@@ -29,7 +31,8 @@ export class OverviewComponent implements OnInit {
     constructor(
         private store: Store,
         private activatedRoute: ActivatedRoute,
-        private router: Router
+        private router: Router,
+        private dialog: MatDialog
     ) {
     }
 
@@ -71,5 +74,12 @@ export class OverviewComponent implements OnInit {
             this.store.dispatch(new PostUpdateAction(this.post)).subscribe(() => {
             });
         }
+    }
+
+    openImageSectorModal() {
+        const dialog = this.dialog.open(SelectImageModalComponent, {
+            height: '50vh',
+            width: '50vw',
+        });
     }
 }
