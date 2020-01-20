@@ -5,6 +5,7 @@ export const POST_QUERY = gql`
         post(id: $id){
             id
             name
+            enable
             title
             description
             body
