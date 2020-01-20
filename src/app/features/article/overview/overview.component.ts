@@ -5,6 +5,7 @@ import {Store} from "@ngxs/store";
 
 import {Post} from "../../../core/redux/models";
 import {PostState} from "../../../core/redux/states";
+import {PostUpdateAction} from "../../../core/redux/actions";
 
 @Component({
     selector: 'app-overview',
@@ -41,5 +42,14 @@ export class OverviewComponent implements OnInit {
 
     onBodyChange() {
         this.post.body = this.articleForm.controls.body.value;
+    }
+
+    updatePost() {
+        this.post.body = this.articleForm.controls.body.value;
+        this.post.description = this.articleForm.controls.description.value;
+        this.post.title = this.articleForm.controls.title.value;
+        this.post.enable = this.articleForm.controls.enable.value;
+
+        this.store.dispatch(new PostUpdateAction(this.post)).subscribe(() => {});
     }
 }

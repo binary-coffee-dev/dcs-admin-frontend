@@ -7,7 +7,8 @@
                         <h4 class="card-title">Edit article</h4>
                     </div>
                     <div class="card-body">
-                        <form [formGroup]="articleForm">
+                        <form [formGroup]="articleForm"
+                              (submit)="updatePost()">
                             <div class="row">
                                 <div class="form-check enable-attribute">
                                     <label class="form-check-label">

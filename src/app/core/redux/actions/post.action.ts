@@ -1,7 +1,16 @@
+import {Post} from "../models";
+
 export class PostAction {
   static readonly type = '[Post] Fetch post';
 
   constructor(public postId: string) {
+  }
+}
+
+export class PostUpdateAction {
+  static readonly type = '[Post] Post update';
+
+  constructor(public post: Post) {
   }
 }
 
