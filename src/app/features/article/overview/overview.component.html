@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="col-md-6 banner-image-container">
                                     <img *ngIf="post?.banner?.url"
-                                         [src]="post?.banner?.url"
+                                         [src]="normalizeUrl(post?.banner?.url)"
                                          alt="">
                                     <div *ngIf="!post?.banner?.url"
                                          class="no-banner"><span>No banner</span></div>

@@ -10,6 +10,7 @@ import {AuthState, PostState} from "../../../core/redux/states";
 import {PostCreateAction, PostUpdateAction} from "../../../core/redux/actions";
 import {SelectImageModalComponent} from "./select-image-modal/select-image-modal.component";
 import {environment} from "../../../../environments/environment";
+import {normalizeImageUrl} from "../../../core/utils/url-utils";
 
 @Component({
     selector: 'app-overview',
@@ -46,7 +47,7 @@ export class OverviewComponent implements OnInit {
                     const newPost = {...post};
                     if (newPost.banner) {
                         newPost.banner = {...newPost.banner};
-                        newPost.banner.url = this.normalizeImageUrl(newPost.banner.url);
+                        newPost.banner.url = normalizeImageUrl(newPost.banner.url);
                     }
                     this.post = newPost;
                     this.articleForm.controls.body.setValue(this.post.body);
@@ -58,11 +59,8 @@ export class OverviewComponent implements OnInit {
         }
     }
 
-    normalizeImageUrl(url: string) {
-        if (url.startsWith('http')) {
-            return url;
-        }
-        return environment.apiUrl + url;
+    normalizeUrl(url) {
+        return normalizeImageUrl(url);
     }
 
     isNewPost() {

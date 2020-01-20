@@ -12,7 +12,7 @@
                                  *ngFor="let file of files">
                                 <img class="image-tile"
                                      (click)="selectImage(file)"
-                                     [src]="file.url"
+                                     [src]="normalizeUrl(file.url)"
                                      alt="">
                             </div>
                         </div>

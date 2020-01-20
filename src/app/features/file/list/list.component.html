@@ -30,14 +30,14 @@
                 <tr *ngFor="let file of files">
                   <td>{{file.name}}</td>
                   <td><img class="file-image"
-                           [src]="file.url"
+                           [src]="normalizeUrl(file?.url)"
                            [alt]="file.name"></td>
                   <td class="td-actions text-right">
                     <button mat-raised-button
                             type="button"
                             matTooltip="Copy Url"
                             [matTooltipPosition]="'above'"
-                            ngxClipboard [cbContent]="file.url"
+                            ngxClipboard [cbContent]="normalizeUrl(file?.url)"
                             class="btn btn-danger btn-link btn-sm btn-just-icon">
                       <i class="material-icons">file_copy</i>
                     </button>

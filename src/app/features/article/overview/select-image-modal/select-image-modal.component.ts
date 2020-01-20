@@ -6,6 +6,7 @@ import {Store} from "@ngxs/store";
 import {FileState} from "../../../../core/redux/states";
 import {File} from "../../../../core/redux/models";
 import {FetchFilesAction} from "../../../../core/redux/actions";
+import {normalizeImageUrl} from "../../../../core/utils/url-utils";
 
 @Component({
     selector: 'app-select-image-modal',
@@ -30,6 +31,10 @@ export class SelectImageModalComponent implements OnInit {
 
     selectImage(image: File) {
         this.dialogRef.close(image);
+    }
+
+    normalizeUrl(url) {
+        return normalizeImageUrl(url);
     }
 
 }

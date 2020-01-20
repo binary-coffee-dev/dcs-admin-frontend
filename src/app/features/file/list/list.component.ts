@@ -7,6 +7,7 @@ import {File} from "../../../core/redux/models";
 import {FetchFilesAction} from "../../../core/redux/actions";
 import {FileState} from "../../../core/redux/states";
 import {UploadFileModalComponent} from "./upload-file.modal";
+import {normalizeImageUrl} from "../../../core/utils/url-utils";
 
 @Component({
     selector: 'app-list',
@@ -39,5 +40,9 @@ export class ListComponent implements OnInit {
 
     refreshPage() {
         this.store.dispatch(new FetchFilesAction()).subscribe(() => {});
+    }
+
+    normalizeUrl(url: string) {
+        return normalizeImageUrl(url);
     }
 }
