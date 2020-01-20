@@ -6,7 +6,7 @@ import {Apollo} from "apollo-angular";
 
 import {Post, PostConnection} from "../models";
 import {POST_QUERY, POSTS_QUERY} from "../../graphql/queries";
-import {POST_UPDATE_MUTATION} from "../../graphql/mutations";
+import {POST_CREATE_MUTATION, POST_UPDATE_MUTATION} from "../../graphql/mutations";
 
 @Injectable({
     providedIn: 'root'
@@ -32,5 +32,11 @@ export class PostService {
         return this.apollo
             .mutate({mutation: POST_UPDATE_MUTATION, variables: post})
             .pipe(map((result: any) => result.data.updatePost.post));
+    }
+
+    createPost(post: Post) {
+        return this.apollo
+            .mutate({mutation: POST_CREATE_MUTATION, variables: post})
+            .pipe(map((result: any) => result.data.createPost.post));
     }
 }

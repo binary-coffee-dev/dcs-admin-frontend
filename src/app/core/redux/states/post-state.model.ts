@@ -4,6 +4,7 @@ import {StateBase} from "./pagination-base.class";
 export interface PostStateModel extends StateBase {
   elements: Post[];
   post: Post;
+  newPostId: string;
 }
 
 export const initPostStateModel = () => {

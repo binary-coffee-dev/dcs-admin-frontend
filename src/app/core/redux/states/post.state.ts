@@ -3,7 +3,14 @@ import {tap} from 'rxjs/operators';
 import {Observable} from "rxjs";
 
 import {PostService} from '../services';
-import {PostAction, FetchPostsAction, NextPageAction, PreviousPageAction, PostUpdateAction} from '../actions';
+import {
+    PostAction,
+    FetchPostsAction,
+    NextPageAction,
+    PreviousPageAction,
+    PostUpdateAction,
+    PostCreateAction
+} from '../actions';
 import {initPostStateModel, PostStateModel} from './post-state.model';
 import {Post} from '../models';
 import {MINIMUM_PAGE, PaginationBaseClass, ResponseData} from "./pagination-base.class";
@@ -32,6 +39,11 @@ export class PostState extends PaginationBaseClass<PostStateModel> {
     @Selector()
     static lastPage(state: PostStateModel): boolean {
         return state.lastPage;
+    }
+
+    @Selector()
+    static newPostId(state: PostStateModel): string {
+        return state.newPostId;
     }
 
     constructor(private postService: PostService) {
@@ -73,6 +85,11 @@ export class PostState extends PaginationBaseClass<PostStateModel> {
     @Action(PostUpdateAction)
     postUpdateAction(ctx: StateContext<PostStateModel>, action: PostUpdateAction) {
         return this.postService.updatePost(action.post);
+    }
+
+    @Action(PostCreateAction)
+    postCreateAction(ctx: StateContext<PostStateModel>, action: PostCreateAction) {
+        return this.postService.createPost(action.post).pipe(tap(post => ctx.patchState({newPostId: post.id})));
     }
 
     fetchElements(pageSize, start): Observable<ResponseData> {

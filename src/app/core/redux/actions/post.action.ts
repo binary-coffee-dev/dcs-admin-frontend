@@ -14,6 +14,13 @@ export class PostUpdateAction {
   }
 }
 
+export class PostCreateAction {
+  static readonly type = '[Post] Post create';
+
+  constructor(public post: Post) {
+  }
+}
+
 export class FetchPostsAction {
   static readonly type = '[Post] Fetch posts';
 }

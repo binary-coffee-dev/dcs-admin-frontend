@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
+import {ActivatedRoute, Router} from "@angular/router";
 
 import {Store} from "@ngxs/store";
 
 import {Post} from "../../../core/redux/models";
 import {PostState} from "../../../core/redux/states";
-import {PostUpdateAction} from "../../../core/redux/actions";
-import {ActivatedRoute, Router} from "@angular/router";
+import {PostCreateAction, PostUpdateAction} from "../../../core/redux/actions";
 
 @Component({
     selector: 'app-overview',
@@ -26,7 +26,11 @@ export class OverviewComponent implements OnInit {
         title: new FormControl('')
     });
 
-    constructor(private store: Store, private activatedRoute: ActivatedRoute) {
+    constructor(
+        private store: Store,
+        private activatedRoute: ActivatedRoute,
+        private router: Router
+    ) {
     }
 
     ngOnInit() {
@@ -57,10 +61,12 @@ export class OverviewComponent implements OnInit {
         this.post.body = this.articleForm.controls.body.value;
         this.post.description = this.articleForm.controls.description.value;
         this.post.title = this.articleForm.controls.title.value;
-        this.post.enable = this.articleForm.controls.enable.value;
+        this.post.enable = !!this.articleForm.controls.enable.value;
 
         if (this.isNewPost()) {
-
+            this.store.dispatch(new PostCreateAction(this.post)).subscribe(() => {
+                this.router.navigate([`/articles/update/${this.store.selectSnapshot(PostState.newPostId)}`]);
+            });
         } else {
             this.store.dispatch(new PostUpdateAction(this.post)).subscribe(() => {
             });
