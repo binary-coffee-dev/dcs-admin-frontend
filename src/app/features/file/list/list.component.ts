@@ -26,7 +26,10 @@ export class ListComponent implements OnInit {
     }
 
     openUploadFileModal() {
-      const dialog = this.dialog.open(UploadFileModalComponent, {});
+      const dialog = this.dialog.open(UploadFileModalComponent, {
+          height: 'auto',
+          width: '50vh',
+      });
       dialog.afterClosed().subscribe(result => {});
     }
 }
