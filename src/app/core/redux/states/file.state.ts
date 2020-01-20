@@ -5,7 +5,7 @@ import {Observable} from "rxjs";
 import {
     FetchFilesAction,
     NextFilesPageAction,
-    PreviousFilesPageAction
+    PreviousFilesPageAction, UploadFileAction
 } from '../actions';
 import {File} from '../models';
 import {FileStateModel, initFileStateModel} from "./file-state.model";
@@ -62,6 +62,11 @@ export class FileState extends PaginationBaseClass<FileStateModel> {
         return this.fetchPage(pageSize, start, ctx, currentPage).pipe(tap(() => {
             ctx.patchState({page: currentPage});
         }));
+    }
+
+    @Action(UploadFileAction)
+    uploadFile(ctx: StateContext<FileStateModel>, action: UploadFileAction) {
+        return this.fileService.uploadFile(action.file, action.name);
     }
 
     fetchElements(pageSize, start): Observable<ResponseData> {

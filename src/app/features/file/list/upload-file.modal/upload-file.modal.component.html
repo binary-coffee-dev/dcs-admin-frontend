@@ -36,6 +36,8 @@
               <p *ngIf="type">Type: {{type}}</p>
               <p *ngIf="size">Size: {{getSize()}}</p>
               <button mat-raised-button
+                      (click)="upload()"
+                      [disabled]="!file"
                       type="submit"
                       class="btn btn-danger pull-right">Upload
               </button>

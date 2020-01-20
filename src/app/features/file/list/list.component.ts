@@ -22,7 +22,7 @@ export class ListComponent implements OnInit {
 
     ngOnInit() {
         this.store.select(FileState.files).subscribe(files => this.files = files);
-        this.store.dispatch(new FetchFilesAction());
+        this.refreshPage();
     }
 
     openUploadFileModal() {
@@ -30,6 +30,14 @@ export class ListComponent implements OnInit {
           height: 'auto',
           width: '50vh',
       });
-      dialog.afterClosed().subscribe(result => {});
+      dialog.afterClosed().subscribe(result => {
+          if (result) {
+              this.refreshPage();
+          }
+      });
+    }
+
+    refreshPage() {
+        this.store.dispatch(new FetchFilesAction()).subscribe(() => {});
     }
 }
