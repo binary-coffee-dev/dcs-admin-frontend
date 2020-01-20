@@ -89,7 +89,7 @@ export class PostState extends PaginationBaseClass<PostStateModel> {
 
     @Action(PostCreateAction)
     postCreateAction(ctx: StateContext<PostStateModel>, action: PostCreateAction) {
-        return this.postService.createPost(action.post).pipe(tap(post => ctx.patchState({newPostId: post.id})));
+        return this.postService.createPost(action.post, action.me).pipe(tap(post => ctx.patchState({newPostId: post.id})));
     }
 
     fetchElements(pageSize, start): Observable<ResponseData> {

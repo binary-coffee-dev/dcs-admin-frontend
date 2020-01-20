@@ -4,7 +4,7 @@ import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {Apollo} from "apollo-angular";
 
-import {Post, PostConnection} from "../models";
+import {Post, PostConnection, User} from "../models";
 import {POST_QUERY, POSTS_QUERY} from "../../graphql/queries";
 import {POST_CREATE_MUTATION, POST_UPDATE_MUTATION} from "../../graphql/mutations";
 
@@ -34,9 +34,9 @@ export class PostService {
             .pipe(map((result: any) => result.data.updatePost.post));
     }
 
-    createPost(post: Post) {
+    createPost(post: Post, me: User) {
         return this.apollo
-            .mutate({mutation: POST_CREATE_MUTATION, variables: post})
+            .mutate({mutation: POST_CREATE_MUTATION, variables: {...post, author: me.id}})
             .pipe(map((result: any) => result.data.createPost.post));
     }
 }

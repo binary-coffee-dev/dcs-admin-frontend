@@ -1,4 +1,4 @@
-import {Post} from "../models";
+import {Post, User} from "../models";
 
 export class PostAction {
   static readonly type = '[Post] Fetch post';
@@ -17,7 +17,7 @@ export class PostUpdateAction {
 export class PostCreateAction {
   static readonly type = '[Post] Post create';
 
-  constructor(public post: Post) {
+  constructor(public post: Post, public me: User) {
   }
 }
 

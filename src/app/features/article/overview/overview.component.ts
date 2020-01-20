@@ -5,7 +5,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Store} from "@ngxs/store";
 
 import {Post} from "../../../core/redux/models";
-import {PostState} from "../../../core/redux/states";
+import {AuthState, PostState} from "../../../core/redux/states";
 import {PostCreateAction, PostUpdateAction} from "../../../core/redux/actions";
 
 @Component({
@@ -64,7 +64,7 @@ export class OverviewComponent implements OnInit {
         this.post.enable = !!this.articleForm.controls.enable.value;
 
         if (this.isNewPost()) {
-            this.store.dispatch(new PostCreateAction(this.post)).subscribe(() => {
+            this.store.dispatch(new PostCreateAction(this.post, this.store.selectSnapshot(AuthState.me))).subscribe(() => {
                 this.router.navigate([`/articles/update/${this.store.selectSnapshot(PostState.newPostId)}`]);
             });
         } else {
