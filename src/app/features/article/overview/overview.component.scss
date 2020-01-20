@@ -8,4 +8,32 @@
   .enable-attribute {
     padding: 0 15px;
   }
+
+  .row {
+    margin-bottom: 20px;
+  }
+
+  .banner-image-container {
+    min-height: 200px;
+    position: relative;
+    background: #b1b1b1;
+
+    .no-banner {
+      align-items: center;
+      display: flex;
+      align-content: center;
+      height: 100%;
+
+      span {
+        width: 100%;
+        text-align: center;
+      }
+    }
+
+    .floating-button-banner {
+      position: absolute;
+      right: 15px;
+      bottom: 5px;
+    }
+  }
 }
