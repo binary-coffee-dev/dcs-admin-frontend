@@ -4,7 +4,12 @@ import {MatDialog} from "@angular/material/dialog";
 import {Store} from "@ngxs/store";
 
 import {File} from "../../../core/redux/models";
-import {FetchFilesAction} from "../../../core/redux/actions";
+import {
+    ChangeFilesPageAction,
+    FetchFilesAction,
+    NextFilesPageAction,
+    PreviousFilesPageAction
+} from "../../../core/redux/actions";
 import {FileState} from "../../../core/redux/states";
 import {UploadFileModalComponent} from "./upload-file.modal";
 import {normalizeImageUrl} from "../../../core/utils/url-utils";
@@ -18,12 +23,21 @@ export class ListComponent implements OnInit {
 
     files: File[] = [];
 
+    numberOfPages = 0;
+    currentPage = 0;
+
     constructor(private store: Store, private dialog: MatDialog) {
     }
 
     ngOnInit() {
         this.store.select(FileState.files).subscribe(files => this.files = files);
         this.refreshPage();
+        this.store.select(FileState.pageIndicators).subscribe(indicators => {
+            if (indicators) {
+                this.currentPage = indicators.page;
+                this.numberOfPages = Math.ceil(indicators.count / indicators.pageSize);
+            }
+        });
     }
 
     openUploadFileModal() {
@@ -44,5 +58,17 @@ export class ListComponent implements OnInit {
 
     normalizeUrl(url: string) {
         return normalizeImageUrl(url);
+    }
+
+    nextPageEvent() {
+        this.store.dispatch(new NextFilesPageAction());
+    }
+
+    previousPageEvent() {
+        this.store.dispatch(new PreviousFilesPageAction());
+    }
+
+    selectPageEvent(page) {
+        this.store.dispatch(new ChangeFilesPageAction(page));
     }
 }

@@ -7,6 +7,7 @@ import {MaterialModule} from "../../core/material/material.module";
 import {ListComponent} from './list/list.component';
 import {FileRoutingModule} from "./file-routing.module";
 import {UploadFileModalComponent} from './list/upload-file.modal';
+import {PaginationModule} from "../components/pagination/pagination.module";
 
 @NgModule({
     declarations: [ListComponent, UploadFileModalComponent],
@@ -14,6 +15,7 @@ import {UploadFileModalComponent} from './list/upload-file.modal';
         CommonModule,
         FileRoutingModule,
         MaterialModule,
+        PaginationModule,
         ClipboardModule
     ],
     entryComponents: [UploadFileModalComponent]

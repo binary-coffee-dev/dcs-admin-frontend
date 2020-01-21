@@ -3,13 +3,14 @@ import {tap} from 'rxjs/operators';
 import {Observable} from "rxjs";
 
 import {
+    ChangeFilesPageAction,
     FetchFilesAction,
     NextFilesPageAction,
     PreviousFilesPageAction, UploadFileAction
 } from '../actions';
 import {File} from '../models';
 import {FileStateModel, initFileStateModel} from "./file-state.model";
-import {MINIMUM_PAGE, PaginationBaseClass, ResponseData} from "./pagination-base.class";
+import {MINIMUM_PAGE, PaginationBaseClass, ResponseData, StateBase} from "./pagination-base.class";
 import {FileService} from "../services";
 
 @State<FileStateModel>({
@@ -33,6 +34,11 @@ export class FileState extends PaginationBaseClass<FileStateModel> {
         return state.lastPage;
     }
 
+    @Selector()
+    static pageIndicators(state: FileStateModel): StateBase {
+        return {...state} as StateBase;
+    }
+
     constructor(private fileService: FileService) {
         super();
     }
@@ -52,6 +58,11 @@ export class FileState extends PaginationBaseClass<FileStateModel> {
     @Action(PreviousFilesPageAction)
     previousPageAction(ctx: StateContext<FileStateModel>) {
         return this.previousPage(ctx);
+    }
+
+    @Action(ChangeFilesPageAction)
+    changeFilesPageAction(ctx: StateContext<FileStateModel>, action: ChangeFilesPageAction) {
+        return this.pageByNumber(ctx, action.page);
     }
 
     @Action(UploadFileAction)

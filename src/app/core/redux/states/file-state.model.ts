@@ -9,7 +9,7 @@ export const initFileStateModel = () => {
     return {
         elements: [],
         page: 0,
-        pageSize: 10,
+        pageSize: 5,
         firstPage: false,
         lastPage: false
     } as FileStateModel;

@@ -34,7 +34,7 @@ export class PreviousPageAction {
 }
 
 export class SelectPageAction {
-    static readonly type = '[Post] Previous page';
+    static readonly type = '[Post] Change page';
 
     constructor(public page: number) {
     }
