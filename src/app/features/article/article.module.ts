@@ -8,6 +8,7 @@ import {ListComponent} from './list/list.component';
 import {ArticleRoutingModule} from './article-routing.module';
 import {MaterialModule} from "../../core/material/material.module";
 import { SelectImageModalComponent } from './overview/select-image-modal/select-image-modal.component';
+import {PaginationModule} from "../components/pagination/pagination.module";
 
 @NgModule({
     declarations: [OverviewComponent, ListComponent, SelectImageModalComponent],
@@ -15,6 +16,7 @@ import { SelectImageModalComponent } from './overview/select-image-modal/select-
         CommonModule,
         ArticleRoutingModule,
         MaterialModule,
+        PaginationModule,
         MarkdownModule.forRoot()
     ],
     entryComponents: [SelectImageModalComponent]
