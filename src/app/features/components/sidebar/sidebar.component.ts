@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {Store} from "@ngxs/store";
 
 import {LogoutAction} from "../../../core/redux/actions";
+import {environment} from "../../../../environments/environment";
 
 declare const $: any;
 
@@ -43,5 +44,9 @@ export class SidebarComponent implements OnInit {
         this.store.dispatch(new LogoutAction()).subscribe(() => {
             this.router.navigate(['login']);
         });
+    }
+
+    getSiteUrl() {
+        return environment.siteUrl;
     }
 }
