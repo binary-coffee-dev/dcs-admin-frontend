@@ -59,22 +59,12 @@ export class PostState extends PaginationBaseClass<PostStateModel> {
 
     @Action(NextPageAction)
     nextPageAction(ctx: StateContext<PostStateModel>) {
-        const pageSize = ctx.getState().pageSize;
-        const currentPage = this.nextPageNumber(ctx.getState().page, ctx.getState().count, pageSize);
-        const start = currentPage * pageSize;
-        return this.fetchPage(pageSize, start, ctx, currentPage).pipe(tap(() => {
-            ctx.patchState({page: currentPage});
-        }));
+        return this.nextPage(ctx);
     }
 
     @Action(PreviousPageAction)
     previousPageAction(ctx: StateContext<PostStateModel>) {
-        const pageSize = ctx.getState().pageSize;
-        const currentPage = Math.max(ctx.getState().page - 1, MINIMUM_PAGE);
-        const start = currentPage * pageSize;
-        return this.fetchPage(pageSize, start, ctx, currentPage).pipe(tap(() => {
-            ctx.patchState({page: currentPage});
-        }));
+        return this.previousPage(ctx);
     }
 
     @Action(PostAction)

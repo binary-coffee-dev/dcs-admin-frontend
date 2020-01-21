@@ -21,8 +21,25 @@ export interface ResponseData {
 }
 
 export class PaginationBaseClass<T extends StateBase> {
-    nextPageNumber(page: number, count: number, pageSize: number) {
-        return Math.min(page + 1, !!count ? this.lastPage(count, pageSize) : 0);
+    nextPage(ctx: StateContext<T>) {
+        const pageSize = ctx.getState().pageSize;
+        const currentPage = this.nextPageNumber(ctx.getState().page, ctx.getState().count, pageSize);
+        return this.fetchPageByNumber(ctx, currentPage);
+    }
+
+    previousPage(ctx: StateContext<T>) {
+        const currentPage = Math.max(ctx.getState().page - 1, MINIMUM_PAGE);
+        return this.fetchPageByNumber(ctx, currentPage);
+    }
+
+    fetchPageByNumber(ctx: StateContext<T>, page: number) {
+        const count = ctx.getState().count;
+        const pageSize = ctx.getState().pageSize;
+        if (page >= 0 && page < this.lastPage(count, pageSize)) {
+            return this.fetchPage(pageSize, page * pageSize, ctx, page).pipe(tap(() => {
+                ctx.patchState({page} as unknown as Partial<T>);
+            }));
+        }
     }
 
     fetchPage(pageSize: number, start: number, ctx: StateContext<T>, page?: number) {
@@ -52,6 +69,10 @@ export class PaginationBaseClass<T extends StateBase> {
             firstPage: page === 0,
             lastPage: page === this.lastPage(count, pageSize)
         } as unknown as Partial<T>);
+    }
+
+    nextPageNumber(page: number, count: number, pageSize: number) {
+        return Math.min(page + 1, !!count ? this.lastPage(count, pageSize) : 0);
     }
 
     lastPage(count: number, pageSize: number) {
