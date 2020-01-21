@@ -9,11 +9,11 @@ import {
     NextPageAction,
     PreviousPageAction,
     PostUpdateAction,
-    PostCreateAction
+    PostCreateAction, SelectPageAction
 } from '../actions';
 import {initPostStateModel, PostStateModel} from './post-state.model';
 import {Post} from '../models';
-import {MINIMUM_PAGE, PaginationBaseClass, ResponseData} from "./pagination-base.class";
+import {MINIMUM_PAGE, PaginationBaseClass, ResponseData, StateBase} from "./pagination-base.class";
 
 @State<PostStateModel>({
     name: 'post',
@@ -29,6 +29,11 @@ export class PostState extends PaginationBaseClass<PostStateModel> {
     @Selector()
     static post(state: PostStateModel): Post {
         return state.post;
+    }
+
+    @Selector()
+    static pageIndicator(state: PostStateModel): StateBase {
+        return {...state} as StateBase;
     }
 
     @Selector()
@@ -65,6 +70,11 @@ export class PostState extends PaginationBaseClass<PostStateModel> {
     @Action(PreviousPageAction)
     previousPageAction(ctx: StateContext<PostStateModel>) {
         return this.previousPage(ctx);
+    }
+
+    @Action(SelectPageAction)
+    selectPageAction(ctx: StateContext<PostStateModel>, action: SelectPageAction) {
+        return this.pageByNumber(ctx, action.page);
     }
 
     @Action(PostAction)

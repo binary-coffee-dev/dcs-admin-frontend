@@ -11,7 +11,7 @@ export const initPostStateModel = () => {
   return {
     elements: [],
     page: 0,
-    pageSize: 3,
+    pageSize: 10,
     firstPage: false,
     lastPage: false
   } as PostStateModel;

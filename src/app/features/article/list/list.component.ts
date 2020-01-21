@@ -4,7 +4,7 @@ import {Store} from "@ngxs/store";
 
 import {Post} from "../../../core/redux/models";
 import {PostState} from "../../../core/redux/states";
-import {FetchPostsAction} from "../../../core/redux/actions";
+import {FetchPostsAction, NextPageAction, PreviousPageAction, SelectPageAction} from "../../../core/redux/actions";
 
 @Component({
     selector: 'app-list',
@@ -15,6 +15,9 @@ export class ListComponent implements OnInit {
 
     posts: Post[];
 
+    currentPage = 0;
+    numberOfPages = 0;
+
     constructor(private store: Store) {
     }
 
@@ -23,6 +26,23 @@ export class ListComponent implements OnInit {
         this.posts = posts || [];
       });
       this.store.dispatch(new FetchPostsAction());
+      this.store.select(PostState.pageIndicator).subscribe(indicator => {
+          if (indicator) {
+              this.currentPage = indicator.page;
+              this.numberOfPages = Math.ceil(indicator.count / indicator.pageSize);
+          }
+      })
     }
 
+    nextPageEvent() {
+        this.store.dispatch(new NextPageAction());
+    }
+
+    previousPageEvent() {
+        this.store.dispatch(new PreviousPageAction());
+    }
+
+    selectPageEvent(page) {
+        this.store.dispatch(new SelectPageAction(page));
+    }
 }
