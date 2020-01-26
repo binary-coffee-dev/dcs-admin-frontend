@@ -56,12 +56,13 @@
                                             <i class="material-icons">edit</i>
                                         </button>
                                         <button mat-raised-button
-                                                *ngIf="false"
+                                                *ngIf="true"
                                                 type="button"
-                                                matTooltip="Remove"
+                                                matTooltip="Open article"
                                                 [matTooltipPosition]="'above'"
+                                                (click)="openArticle(post)"
                                                 class="btn btn-success btn-link btn-sm btn-just-icon">
-                                            <i class="material-icons">close</i>
+                                            <i class="material-icons">open_in_new</i>
                                         </button>
                                     </td>
                                 </tr>
