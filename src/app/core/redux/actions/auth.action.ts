@@ -19,3 +19,10 @@ export class UpdateMeAction {
     constructor(public id: string, public email: string, public page: string) {
     }
 }
+
+export class UpdateMyAvatarAction {
+    static readonly type = '[Auth] Update my image action';
+
+    constructor(public id: string, public avatar: string) {
+    }
+}

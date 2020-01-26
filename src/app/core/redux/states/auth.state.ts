@@ -3,7 +3,7 @@ import {Action, Selector, State, StateContext} from '@ngxs/store';
 
 import {AuthStateModel, initAuthStateModel} from "./auth-state.model";
 import {AuthService} from "../services/auth.service";
-import {LoginAction, LogoutAction, MeAction, UpdateMeAction} from "../actions";
+import {LoginAction, LogoutAction, MeAction, UpdateMeAction, UpdateMyAvatarAction} from "../actions";
 import {User} from "../models";
 
 @State<AuthStateModel>({
@@ -47,6 +47,13 @@ export class AuthState {
     @Action(UpdateMeAction)
     updateMeAction(ctx: StateContext<AuthStateModel>, action: UpdateMeAction) {
         return this.authService.updateMeAction(action.id, action.email, action.page).pipe(
+            tap(me => ctx.patchState({me}))
+        );
+    }
+
+    @Action(UpdateMyAvatarAction)
+    updateMyAvatarAction(ctx: StateContext<AuthStateModel>, action: UpdateMyAvatarAction) {
+        return this.authService.updateMyAvatarAction(action.id, action.avatar).pipe(
             tap(me => ctx.patchState({me}))
         );
     }

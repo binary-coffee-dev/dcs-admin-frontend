@@ -1,5 +1,5 @@
 import {Action, Selector, State, StateContext} from '@ngxs/store';
-import {tap} from 'rxjs/operators';
+import {catchError, tap} from 'rxjs/operators';
 import {Observable} from "rxjs";
 
 import {
@@ -10,7 +10,7 @@ import {
 } from '../actions';
 import {File} from '../models';
 import {FileStateModel, initFileStateModel} from "./file-state.model";
-import {MINIMUM_PAGE, PaginationBaseClass, ResponseData, StateBase} from "./pagination-base.class";
+import {PaginationBaseClass, ResponseData, StateBase} from "./pagination-base.class";
 import {FileService} from "../services";
 
 @State<FileStateModel>({
@@ -37,6 +37,11 @@ export class FileState extends PaginationBaseClass<FileStateModel> {
     @Selector()
     static pageIndicators(state: FileStateModel): StateBase {
         return {...state} as StateBase;
+    }
+
+    @Selector()
+    static newFile(state: FileStateModel): File {
+        return state.newFile;
     }
 
     constructor(private fileService: FileService) {
@@ -67,7 +72,15 @@ export class FileState extends PaginationBaseClass<FileStateModel> {
 
     @Action(UploadFileAction)
     uploadFile(ctx: StateContext<FileStateModel>, action: UploadFileAction) {
-        return this.fileService.uploadFile(action.file, action.name);
+        return this.fileService.uploadFile(action.file, action.name).pipe(
+            tap((file: File) => {
+                ctx.patchState({newFile: file});
+            }),
+            catchError(error => {
+                ctx.patchState({newFile: null});
+                return error;
+            })
+        );
     }
 
     fetchElements(pageSize, start): Observable<ResponseData> {

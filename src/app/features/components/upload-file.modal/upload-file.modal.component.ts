@@ -4,6 +4,7 @@ import {FormControl, FormGroup} from "@angular/forms";
 import {Store} from "@ngxs/store";
 import {MatDialogRef} from "@angular/material/dialog";
 import {UploadFileAction} from "../../../core/redux/actions";
+import {FileState} from "../../../core/redux/states";
 
 @Component({
   selector: 'app-upload-file.modal',
@@ -48,7 +49,7 @@ export class UploadFileModalComponent implements OnInit {
 
   upload() {
     this.store.dispatch(new UploadFileAction(this.file, this.uploadFileForm.controls.name.value)).subscribe(() => {
-      this.dialogRef.close(true);
+      this.dialogRef.close(this.store.selectSnapshot(FileState.newFile));
     });
   }
 }
