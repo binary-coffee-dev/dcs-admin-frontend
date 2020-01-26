@@ -17,7 +17,7 @@ export class FileService {
 
     fetchFiles(limit, start = 0) {
         return this.apollo
-            .watchQuery({query: FILES_QUERY, variables: {limit, start}})
+            .watchQuery({query: FILES_QUERY, variables: {limit, start}, fetchPolicy: "no-cache"})
             .valueChanges.pipe(map((result: any) => result.data.uploadsConnection));
     }
 
