@@ -22,6 +22,9 @@ export class OverviewComponent implements OnInit {
         body: ''
     } as Post;
 
+    formDataChange = false;
+    imageChange = false;
+
     articleForm = new FormGroup({
         body: new FormControl(''),
         enable: new FormControl(''),
@@ -64,8 +67,11 @@ export class OverviewComponent implements OnInit {
         return !this.activatedRoute.snapshot.params.id;
     }
 
-    onBodyChange() {
-        this.post.body = this.articleForm.controls.body.value;
+    onPostChange() {
+        const keyNames = ['body', 'description', 'title', 'enable'];
+        this.formDataChange = keyNames.reduce((prev, key) => {
+            return prev || this.post && this.post[key] !== this.articleForm.controls[key].value
+        }, false);
     }
 
     submitPost() {
@@ -80,6 +86,7 @@ export class OverviewComponent implements OnInit {
             });
         } else {
             this.store.dispatch(new PostUpdateAction(this.post)).subscribe(() => {
+                this.imageChange = this.formDataChange = false;
             });
         }
     }
@@ -93,6 +100,7 @@ export class OverviewComponent implements OnInit {
         dialog.afterClosed().subscribe((image: File) => {
             if (image) {
                 this.post.banner = image;
+                this.imageChange = true;
             }
         });
     }

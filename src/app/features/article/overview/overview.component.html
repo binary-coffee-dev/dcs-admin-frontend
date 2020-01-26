@@ -8,6 +8,7 @@
                     </div>
                     <div class="card-body">
                         <form [formGroup]="articleForm"
+                              (change)="onPostChange()"
                               (submit)="submitPost()">
                             <div class="row">
                                 <div class="form-check enable-attribute">
@@ -59,18 +60,18 @@
                             <div class="row">
                                 <div class="col-md-6">
                                   <textarea class="body-editor"
-                                            (change)="onBodyChange()"
                                             formControlName="body"></textarea>
                                 </div>
                                 <div class="col-md-6">
-                                    <markdown [data]="post?.body"
+                                    <markdown [data]="articleForm?.controls?.body?.value"
                                               katex
                                               lineNumbers></markdown>
                                 </div>
                             </div>
                             <button mat-raised-button
+                                    [disabled]="!formDataChange && !imageChange"
                                     type="submit"
-                                    class="btn btn-success pull-right">Save
+                                    class="btn btn-success pull-right button-save">Save
                             </button>
                             <div class="clearfix"></div>
                         </form>
