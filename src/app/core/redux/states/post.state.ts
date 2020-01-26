@@ -4,16 +4,18 @@ import {Observable} from "rxjs";
 
 import {PostService} from '../services';
 import {
-    PostAction,
+    CreateNotificationAction,
     FetchPostsAction,
     NextPageAction,
-    PreviousPageAction,
+    PostAction,
+    PostCreateAction,
     PostUpdateAction,
-    PostCreateAction, SelectPageAction
+    PreviousPageAction,
+    SelectPageAction
 } from '../actions';
 import {initPostStateModel, PostStateModel} from './post-state.model';
-import {Post} from '../models';
-import {MINIMUM_PAGE, PaginationBaseClass, ResponseData, StateBase} from "./pagination-base.class";
+import {NotificationType, Post} from '../models';
+import {PaginationBaseClass, ResponseData, StateBase} from "./pagination-base.class";
 
 @State<PostStateModel>({
     name: 'post',
@@ -84,12 +86,17 @@ export class PostState extends PaginationBaseClass<PostStateModel> {
 
     @Action(PostUpdateAction)
     postUpdateAction(ctx: StateContext<PostStateModel>, action: PostUpdateAction) {
-        return this.postService.updatePost(action.post);
+        return this.postService.updatePost(action.post).pipe(tap(() => {
+            ctx.dispatch(new CreateNotificationAction('Artículo actualizado correctamente', NotificationType.info))
+        }));
     }
 
     @Action(PostCreateAction)
     postCreateAction(ctx: StateContext<PostStateModel>, action: PostCreateAction) {
-        return this.postService.createPost(action.post, action.me).pipe(tap(post => ctx.patchState({newPostId: post.id})));
+        return this.postService.createPost(action.post, action.me).pipe(tap(post => {
+            ctx.patchState({newPostId: post.id});
+            ctx.dispatch(new CreateNotificationAction('Artículo creado correctamente', NotificationType.info));
+        }));
     }
 
     fetchElements(pageSize, start): Observable<ResponseData> {
