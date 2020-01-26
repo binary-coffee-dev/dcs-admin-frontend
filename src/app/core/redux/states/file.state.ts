@@ -4,11 +4,13 @@ import {Observable} from "rxjs";
 
 import {
     ChangeFilesPageAction,
+    CreateNotificationAction,
     FetchFilesAction,
     NextFilesPageAction,
-    PreviousFilesPageAction, UploadFileAction
+    PreviousFilesPageAction,
+    UploadFileAction
 } from '../actions';
-import {File} from '../models';
+import {File, NotificationType} from '../models';
 import {FileStateModel, initFileStateModel} from "./file-state.model";
 import {PaginationBaseClass, ResponseData, StateBase} from "./pagination-base.class";
 import {FileService} from "../services";
@@ -75,9 +77,11 @@ export class FileState extends PaginationBaseClass<FileStateModel> {
         return this.fileService.uploadFile(action.file, action.name).pipe(
             tap((file: File) => {
                 ctx.patchState({newFile: file});
+                ctx.dispatch(new CreateNotificationAction(`Archivo ${file.name} creado correctamente.`, NotificationType.info));
             }),
             catchError(error => {
                 ctx.patchState({newFile: null});
+                ctx.dispatch(new CreateNotificationAction(`Errores al subir el archivo: ${action.name}`, NotificationType.info));
                 return error;
             })
         );
