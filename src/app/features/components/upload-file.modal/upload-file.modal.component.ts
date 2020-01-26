@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
 
 import {Store} from "@ngxs/store";
-import {UploadFileAction} from "../../../../core/redux/actions";
 import {MatDialogRef} from "@angular/material/dialog";
+import {UploadFileAction} from "../../../core/redux/actions";
 
 @Component({
   selector: 'app-upload-file.modal',
