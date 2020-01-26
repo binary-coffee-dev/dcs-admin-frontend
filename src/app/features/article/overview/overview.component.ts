@@ -5,9 +5,9 @@ import {MatDialog} from "@angular/material/dialog";
 
 import {Store} from "@ngxs/store";
 
-import {File, Post} from "../../../core/redux/models";
+import {File, NotificationType, Post} from "../../../core/redux/models";
 import {AuthState, PostState} from "../../../core/redux/states";
-import {PostCreateAction, PostUpdateAction} from "../../../core/redux/actions";
+import {CreateNotificationAction, PostCreateAction, PostUpdateAction} from "../../../core/redux/actions";
 import {SelectImageModalComponent} from "./select-image-modal/select-image-modal.component";
 import {normalizeImageUrl} from "../../../core/utils/url-utils";
 
@@ -38,9 +38,7 @@ export class OverviewComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (this.isNewPost()) {
-
-        } else {
+        if (!this.isNewPost()) {
             this.store.select(PostState.post).subscribe(post => {
                 if (post) {
                     const newPost = {...post};

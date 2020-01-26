@@ -1,36 +1,45 @@
 import {Component, OnInit} from '@angular/core';
+
+import {Store} from "@ngxs/store";
+
 import {Notification, NotificationType} from "../../../core/redux/models";
+import {NotificationState} from "../../../core/redux/states";
+import {CloseNotificationAction} from "../../../core/redux/actions";
 
 @Component({
-  selector: 'app-notifications',
-  templateUrl: './notifications.component.html',
-  styleUrls: ['./notifications.component.scss']
+    selector: 'app-notifications',
+    templateUrl: './notifications.component.html',
+    styleUrls: ['./notifications.component.scss']
 })
 export class NotificationsComponent implements OnInit {
 
-  messages: Notification[] = [];
+    notifications: Notification[] = [];
 
-  notificationsMap: Set<number> = new Set<number>();
+    notificationsMap: Set<number> = new Set<number>();
 
-  constructor() { }
+    constructor(private store: Store) {
+    }
 
-  ngOnInit() {
-    this.messages.push({
-      id: new Date().getTime(),
-      title: 'This is an example of notification',
-      type: NotificationType.danger
-    } as Notification);
+    ngOnInit() {
+      this.store.select(NotificationState.notifications)
+          .subscribe(notifications => {
+            notifications
+                .filter(not => !this.notificationsMap.has(not.id))
+                .forEach(not => this.startNotification(not.id));
+            this.notifications = notifications;
+          });
+    }
 
-    this.startNotification(1);
-  }
+    startNotification(id) {
+        this.notificationsMap.add(id);
+        setTimeout((id: number, notificationsMap: Set<number>, closeNotification: Function) => {
+            closeNotification(id);
+            notificationsMap.delete(id);
+        }, 2000, id, this.notificationsMap, this.closeNotification.bind(this));
+    }
 
-  startNotification(id) {
-    this.notificationsMap.add(id);
-    console.log('a', this.notificationsMap);
-    setTimeout((id: number, notificationsMap: Set<number>) => {
-      notificationsMap.delete(id);
-      console.log('b', this.notificationsMap);
-    }, 2000, id, this.notificationsMap);
-  }
+    closeNotification(id: number) {
+        this.store.dispatch(new CloseNotificationAction(id));
+    }
 
 }

@@ -6,7 +6,7 @@ import {NgxsReduxDevtoolsPluginModule} from "@ngxs/devtools-plugin";
 import {NgxsStoragePluginModule} from "@ngxs/storage-plugin";
 
 import {GraphQLModule} from "../graphql";
-import {AuthState, FileState, PostState} from "./states";
+import {AuthState, FileState, NotificationState, PostState} from "./states";
 import {environment} from "../../../environments/environment";
 
 @NgModule({
@@ -14,7 +14,7 @@ import {environment} from "../../../environments/environment";
     imports: [
         CommonModule,
         GraphQLModule,
-        NgxsModule.forRoot([PostState, AuthState, FileState], {
+        NgxsModule.forRoot([PostState, AuthState, FileState, NotificationState], {
             developmentMode: !environment.production
         }),
         NgxsReduxDevtoolsPluginModule.forRoot(),

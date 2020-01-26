@@ -1,5 +1,6 @@
-<div class="alert alert-danger"
-     *ngFor="let message of messages">
+<div class="alert"
+     *ngFor="let notification of notifications"
+     [class]="'alert alert-' + notification.type">
     <button mat-button
             type="button"
             class="close"
@@ -7,5 +8,5 @@
             aria-label="Close">
         <i class="material-icons">close</i>
     </button>
-    <span>{{message.title}}</span>
+    <span>{{notification.title}}</span>
 </div>
