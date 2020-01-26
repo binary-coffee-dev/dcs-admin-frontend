@@ -1,0 +1,11 @@
+<div class="alert alert-danger"
+     *ngFor="let message of messages">
+    <button mat-button
+            type="button"
+            class="close"
+            data-dismiss="alert"
+            aria-label="Close">
+        <i class="material-icons">close</i>
+    </button>
+    <span>{{message.title}}</span>
+</div>

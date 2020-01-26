@@ -9,7 +9,6 @@ import {File, Post} from "../../../core/redux/models";
 import {AuthState, PostState} from "../../../core/redux/states";
 import {PostCreateAction, PostUpdateAction} from "../../../core/redux/actions";
 import {SelectImageModalComponent} from "./select-image-modal/select-image-modal.component";
-import {environment} from "../../../../environments/environment";
 import {normalizeImageUrl} from "../../../core/utils/url-utils";
 
 @Component({
