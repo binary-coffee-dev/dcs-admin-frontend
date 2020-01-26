@@ -1,5 +1,8 @@
 export class FetchFilesAction {
     static readonly type = '[File] Fetch files';
+
+    constructor(public pageSize: number = 5) {
+    }
 }
 
 export class NextFilesPageAction {

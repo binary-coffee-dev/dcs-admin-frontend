@@ -30,6 +30,10 @@
                   </mat-form-field>
                 </div>
               </div>
+              <div class="alert alert-danger"
+                   *ngIf="authError">
+                <span>{{authError.title}}</span>
+              </div>
               <button mat-raised-button
                       type="submit"
                       class="btn btn-success

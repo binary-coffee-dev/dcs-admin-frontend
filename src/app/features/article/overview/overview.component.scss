@@ -46,4 +46,10 @@
       bottom: 5px;
     }
   }
+
+  .button-save {
+    &:disabled {
+      cursor: inherit;
+    }
+  }
 }

@@ -16,6 +16,11 @@
                                      alt="">
                             </div>
                         </div>
+                        <app-pagination (nextPageEvent)="nextPageEvent()"
+                                        (previousPageEvent)="previousPageEvent()"
+                                        (pageEvent)="selectPageEvent($event)"
+                                        [numberOfPages]="numberOfPages"
+                                        [currentPage]="currentPage"></app-pagination>
                     </div>
                 </div>
             </div>

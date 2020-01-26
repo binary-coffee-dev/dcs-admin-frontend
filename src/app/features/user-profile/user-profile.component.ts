@@ -1,12 +1,14 @@
 import {Component, OnInit} from '@angular/core';
+import {MatDialog} from "@angular/material/dialog";
 
 import {Store} from "@ngxs/store";
 
-import {User} from "../../core/redux/models";
+import {File, User} from "../../core/redux/models";
 import {AuthState} from "../../core/redux/states";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {environment} from "../../../environments/environment";
-import {UpdateMeAction} from "../../core/redux/actions";
+import {UpdateMeAction, UpdateMyAvatarAction} from "../../core/redux/actions";
+import {UploadFileModalComponent} from "../components/upload-file.modal";
 
 @Component({
     selector: 'app-user-profile',
@@ -30,7 +32,7 @@ export class UserProfileComponent implements OnInit {
         password2: new FormControl('', Validators.required),
     });
 
-    constructor(private store: Store) {
+    constructor(private store: Store, private dialog: MatDialog) {
     }
 
     ngOnInit() {
@@ -64,5 +66,17 @@ export class UserProfileComponent implements OnInit {
 
     savePassword() {
 
+    }
+
+    openUploadFileModal() {
+        const dialog = this.dialog.open(UploadFileModalComponent, {
+            height: 'auto',
+            width: '50vh',
+        });
+        dialog.afterClosed().subscribe((result: File) => {
+            if (result) {
+                this.store.dispatch(new UpdateMyAvatarAction(this.me.id, result.id));
+            }
+        });
     }
 }

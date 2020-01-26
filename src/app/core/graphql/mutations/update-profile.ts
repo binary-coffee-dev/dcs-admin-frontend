@@ -20,3 +20,24 @@ export const UPDATE_PROFILE_MUTATION = gql`
         }
     }
 `;
+
+export const UPDATE_PROFILE_IMAGE_MUTATION = gql`
+    mutation updateUser($id: ID!, $avatar: ID) {
+        updateUser(input: { where: {id: $id},data: { avatar: $avatar } }) {
+            user {
+                id
+                username
+                email
+                confirmed
+                blocked
+                role {
+                    name
+                }
+                page
+                avatar {
+                    url
+                }
+            }
+        }
+    }
+`;

@@ -4,7 +4,7 @@ import {Apollo} from "apollo-angular";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 
-import {LOGIN_MUTATION, UPDATE_PROFILE_MUTATION} from "../../graphql/mutations";
+import {LOGIN_MUTATION, UPDATE_PROFILE_IMAGE_MUTATION, UPDATE_PROFILE_MUTATION} from "../../graphql/mutations";
 import {ME_QUERY} from "../../graphql/queries";
 import {LoginResponseModel} from "../models/login-response.model";
 import {User} from "../models";
@@ -32,6 +32,12 @@ export class AuthService {
     updateMeAction(id: string, email: string, page: string) {
         return this.apollo
             .mutate({mutation: UPDATE_PROFILE_MUTATION, variables: {id, email, page}})
+            .pipe(map((result: any) => result.data.updateUser.user));
+    }
+
+    updateMyAvatarAction(id: string, avatar: string) {
+        return this.apollo
+            .mutate({mutation: UPDATE_PROFILE_IMAGE_MUTATION, variables: {id, avatar}})
             .pipe(map((result: any) => result.data.updateUser.user));
     }
 }

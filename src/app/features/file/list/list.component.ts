@@ -11,8 +11,8 @@ import {
     PreviousFilesPageAction
 } from "../../../core/redux/actions";
 import {FileState} from "../../../core/redux/states";
-import {UploadFileModalComponent} from "./upload-file.modal";
 import {normalizeImageUrl} from "../../../core/utils/url-utils";
+import {UploadFileModalComponent} from "../../components/upload-file.modal";
 
 @Component({
     selector: 'app-list',

@@ -5,6 +5,7 @@ import {Store} from "@ngxs/store";
 import {Post} from "../../../core/redux/models";
 import {PostState} from "../../../core/redux/states";
 import {FetchPostsAction, NextPageAction, PreviousPageAction, SelectPageAction} from "../../../core/redux/actions";
+import {environment} from "../../../../environments/environment";
 
 @Component({
     selector: 'app-list',
@@ -31,7 +32,7 @@ export class ListComponent implements OnInit {
               this.currentPage = indicator.page;
               this.numberOfPages = Math.ceil(indicator.count / indicator.pageSize);
           }
-      })
+      });
     }
 
     nextPageEvent() {
@@ -44,5 +45,9 @@ export class ListComponent implements OnInit {
 
     selectPageEvent(page) {
         this.store.dispatch(new SelectPageAction(page));
+    }
+
+    openArticle(post: Post) {
+        window.open(`${environment.siteUrl}/post/${post.name}`)
     }
 }

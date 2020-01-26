@@ -1,16 +1,18 @@
 import {Action, Selector, State, StateContext} from '@ngxs/store';
-import {tap} from 'rxjs/operators';
+import {catchError, tap} from 'rxjs/operators';
 import {Observable} from "rxjs";
 
 import {
     ChangeFilesPageAction,
+    CreateNotificationAction,
     FetchFilesAction,
     NextFilesPageAction,
-    PreviousFilesPageAction, UploadFileAction
+    PreviousFilesPageAction,
+    UploadFileAction
 } from '../actions';
-import {File} from '../models';
+import {File, NotificationType} from '../models';
 import {FileStateModel, initFileStateModel} from "./file-state.model";
-import {MINIMUM_PAGE, PaginationBaseClass, ResponseData, StateBase} from "./pagination-base.class";
+import {PaginationBaseClass, ResponseData, StateBase} from "./pagination-base.class";
 import {FileService} from "../services";
 
 @State<FileStateModel>({
@@ -39,12 +41,18 @@ export class FileState extends PaginationBaseClass<FileStateModel> {
         return {...state} as StateBase;
     }
 
+    @Selector()
+    static newFile(state: FileStateModel): File {
+        return state.newFile;
+    }
+
     constructor(private fileService: FileService) {
         super();
     }
 
     @Action(FetchFilesAction)
-    fetchPostsAction(ctx: StateContext<FileStateModel>) {
+    fetchFilesAction(ctx: StateContext<FileStateModel>, action: FetchFilesAction) {
+        ctx.patchState({pageSize: action.pageSize || ctx.getState().pageSize});
         const pageSize = ctx.getState().pageSize;
         const start = ctx.getState().page * pageSize;
         return this.fetchPage(pageSize, start, ctx);
@@ -67,7 +75,17 @@ export class FileState extends PaginationBaseClass<FileStateModel> {
 
     @Action(UploadFileAction)
     uploadFile(ctx: StateContext<FileStateModel>, action: UploadFileAction) {
-        return this.fileService.uploadFile(action.file, action.name);
+        return this.fileService.uploadFile(action.file, action.name).pipe(
+            tap((file: File) => {
+                ctx.patchState({newFile: file});
+                ctx.dispatch(new CreateNotificationAction(`Archivo ${file.name} creado correctamente.`, NotificationType.info));
+            }),
+            catchError(error => {
+                ctx.patchState({newFile: null});
+                ctx.dispatch(new CreateNotificationAction(`Errores al subir el archivo: ${action.name}`, NotificationType.info));
+                return error;
+            })
+        );
     }
 
     fetchElements(pageSize, start): Observable<ResponseData> {

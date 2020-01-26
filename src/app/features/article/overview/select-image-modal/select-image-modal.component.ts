@@ -5,7 +5,12 @@ import {Store} from "@ngxs/store";
 
 import {FileState} from "../../../../core/redux/states";
 import {File} from "../../../../core/redux/models";
-import {FetchFilesAction} from "../../../../core/redux/actions";
+import {
+    ChangeFilesPageAction,
+    FetchFilesAction,
+    NextFilesPageAction,
+    PreviousFilesPageAction,
+} from "../../../../core/redux/actions";
 import {normalizeImageUrl} from "../../../../core/utils/url-utils";
 
 @Component({
@@ -17,16 +22,25 @@ export class SelectImageModalComponent implements OnInit {
 
     files: File[] = [];
 
+    currentPage = 0;
+    numberOfPages = 0;
+
     constructor(private store: Store, private dialogRef: MatDialogRef<SelectImageModalComponent>) {
     }
 
     ngOnInit() {
-      this.store.select(FileState.files).subscribe(files => {
-        if (files) {
-          this.files = files
-        }
-      });
-      this.store.dispatch(new FetchFilesAction());
+        this.store.select(FileState.files).subscribe(files => {
+            if (files) {
+                this.files = files
+            }
+        });
+        this.store.dispatch(new FetchFilesAction(6));
+        this.store.select(FileState.pageIndicators).subscribe(indicator => {
+            if (indicator) {
+                this.currentPage = indicator.page;
+                this.numberOfPages = Math.ceil(indicator.count / indicator.pageSize);
+            }
+        });
     }
 
     selectImage(image: File) {
@@ -37,4 +51,15 @@ export class SelectImageModalComponent implements OnInit {
         return normalizeImageUrl(url);
     }
 
+    nextPageEvent() {
+        this.store.dispatch(new NextFilesPageAction());
+    }
+
+    previousPageEvent() {
+        this.store.dispatch(new PreviousFilesPageAction());
+    }
+
+    selectPageEvent(page) {
+        this.store.dispatch(new ChangeFilesPageAction(page));
+    }
 }

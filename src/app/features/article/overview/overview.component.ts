@@ -5,11 +5,10 @@ import {MatDialog} from "@angular/material/dialog";
 
 import {Store} from "@ngxs/store";
 
-import {File, Post} from "../../../core/redux/models";
+import {File, NotificationType, Post} from "../../../core/redux/models";
 import {AuthState, PostState} from "../../../core/redux/states";
-import {PostCreateAction, PostUpdateAction} from "../../../core/redux/actions";
+import {CreateNotificationAction, PostCreateAction, PostUpdateAction} from "../../../core/redux/actions";
 import {SelectImageModalComponent} from "./select-image-modal/select-image-modal.component";
-import {environment} from "../../../../environments/environment";
 import {normalizeImageUrl} from "../../../core/utils/url-utils";
 
 @Component({
@@ -22,6 +21,9 @@ export class OverviewComponent implements OnInit {
     post: Post = {
         body: ''
     } as Post;
+
+    formDataChange = false;
+    imageChange = false;
 
     articleForm = new FormGroup({
         body: new FormControl(''),
@@ -39,9 +41,7 @@ export class OverviewComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (this.isNewPost()) {
-
-        } else {
+        if (!this.isNewPost()) {
             this.store.select(PostState.post).subscribe(post => {
                 if (post) {
                     const newPost = {...post};
@@ -67,8 +67,11 @@ export class OverviewComponent implements OnInit {
         return !this.activatedRoute.snapshot.params.id;
     }
 
-    onBodyChange() {
-        this.post.body = this.articleForm.controls.body.value;
+    onPostChange() {
+        const keyNames = ['body', 'description', 'title', 'enable'];
+        this.formDataChange = keyNames.reduce((prev, key) => {
+            return prev || this.post && this.post[key] !== this.articleForm.controls[key].value
+        }, false);
     }
 
     submitPost() {
@@ -83,19 +86,21 @@ export class OverviewComponent implements OnInit {
             });
         } else {
             this.store.dispatch(new PostUpdateAction(this.post)).subscribe(() => {
+                this.imageChange = this.formDataChange = false;
             });
         }
     }
 
     openImageSectorModal() {
         const dialog = this.dialog.open(SelectImageModalComponent, {
-            height: '50vh',
+            height: 'auto',
             width: '50vw',
         });
 
         dialog.afterClosed().subscribe((image: File) => {
             if (image) {
                 this.post.banner = image;
+                this.imageChange = true;
             }
         });
     }

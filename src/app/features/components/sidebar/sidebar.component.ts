@@ -47,6 +47,6 @@ export class SidebarComponent implements OnInit {
     }
 
     getSiteUrl() {
-        return environment.siteUrl;
+        return environment.siteUrl + '/admin';
     }
 }
