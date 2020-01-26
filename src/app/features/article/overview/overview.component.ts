@@ -93,7 +93,7 @@ export class OverviewComponent implements OnInit {
 
     openImageSectorModal() {
         const dialog = this.dialog.open(SelectImageModalComponent, {
-            height: '50vh',
+            height: 'auto',
             width: '50vw',
         });
 

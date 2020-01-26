@@ -51,7 +51,8 @@ export class FileState extends PaginationBaseClass<FileStateModel> {
     }
 
     @Action(FetchFilesAction)
-    fetchPostsAction(ctx: StateContext<FileStateModel>) {
+    fetchFilesAction(ctx: StateContext<FileStateModel>, action: FetchFilesAction) {
+        ctx.patchState({pageSize: action.pageSize || ctx.getState().pageSize});
         const pageSize = ctx.getState().pageSize;
         const start = ctx.getState().page * pageSize;
         return this.fetchPage(pageSize, start, ctx);

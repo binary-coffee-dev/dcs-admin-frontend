@@ -32,7 +32,7 @@ export class ListComponent implements OnInit {
               this.currentPage = indicator.page;
               this.numberOfPages = Math.ceil(indicator.count / indicator.pageSize);
           }
-      })
+      });
     }
 
     nextPageEvent() {
