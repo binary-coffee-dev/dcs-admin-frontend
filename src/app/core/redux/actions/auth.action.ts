@@ -13,6 +13,13 @@ export class MeAction {
     static readonly type = '[Auth] get my data action';
 }
 
+export class AuthErrorAction {
+    static readonly type = '[Auth] Auth error action';
+
+    constructor(public title: string) {
+    }
+}
+
 export class UpdateMeAction {
     static readonly type = '[Auth] Update me action';
 

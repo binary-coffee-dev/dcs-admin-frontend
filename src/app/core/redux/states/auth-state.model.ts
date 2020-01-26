@@ -1,13 +1,15 @@
-import {User} from "../models";
+import {AuthError, User} from "../models";
 
 export interface AuthStateModel {
     token,
-    me: User
+    me: User,
+    error: AuthError
 }
 
 export const initAuthStateModel = () => {
     return {
         token: '',
-        me: {}
+        me: {},
+        error: null
     } as AuthStateModel;
 };
