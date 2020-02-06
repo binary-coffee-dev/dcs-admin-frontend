@@ -23,6 +23,7 @@
                             <table class="table">
                                 <thead class=" text-info">
                                 <th>Title</th>
+                                <th>Published</th>
                                 <th>Enable</th>
                                 <th>Name</th>
                                 <th>Views</th>
@@ -31,6 +32,19 @@
                                 <tbody>
                                 <tr *ngFor="let post of posts">
                                     <td>{{post.title}}</td>
+                                    <td>
+                                        <div class="col-md-6 form-check">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input"
+                                                       type="checkbox"
+                                                       [disabled]="true"
+                                                       [ngModel]="!!post.publishedAt">
+                                                <span class="form-check-sign">
+                                                    <span class="check"></span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </td>
                                     <td>
                                         <div class="col-md-6 form-check">
                                             <label class="form-check-label">
