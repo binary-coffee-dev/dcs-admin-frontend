@@ -1,3 +1,5 @@
+# This project is not longer maintained. You can Found the latest version of the code in the monorepo project on this [link](https://github.com/dcs-community/dcs-frontend).
+
 # Binary Coffee Administration frontend application
 
 This is the administration frontend application of the Binary Coffee community.
